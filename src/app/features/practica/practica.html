@@ -1,0 +1,67 @@
+<div class="pagina">
+  <header>
+    <h1>Práctica con retroalimentación</h1>
+    <p>Genera ejercicios nuevos con números aleatorios, escribe tu respuesta y recibe la calificación al instante. Si fallas, pide una pista o el procedimiento completo.</p>
+  </header>
+
+  <section class="tarjeta">
+    <div class="fila">
+      <div class="campo">
+        <label for="mod">Módulo</label>
+        <select id="mod" [value]="modulo()" (change)="modulo.set($any($event.target).value)">
+          @for (m of modulos; track m.id) { <option [value]="m.id">{{ m.nombre }}</option> }
+        </select>
+      </div>
+      <div class="campo corto">
+        <label for="niv">Nivel</label>
+        <select id="niv" [value]="nivel()" (change)="nivel.set($any($event.target).value)">
+          <option value="basico">Básico</option>
+          <option value="intermedio">Intermedio</option>
+        </select>
+      </div>
+      <button class="btn" type="button" (click)="generar(); reiniciarMarca()">{{ ejercicio() ? 'Otro ejercicio' : 'Generar ejercicio' }}</button>
+    </div>
+  </section>
+
+  <aside class="marcador" aria-live="polite">
+    <span><strong>{{ sesion.aciertos() }}</strong> aciertos de <strong>{{ sesion.intentos() }}</strong> intentos @if (sesion.intentos()) { ({{ sesion.porcentaje() }} %) }</span>
+    <button class="btn suave" type="button" (click)="sesion.reiniciar()">Reiniciar marcador</button>
+  </aside>
+
+  @if (ejercicio(); as e) {
+    <section class="tarjeta ejercicio">
+      <h2>{{ e.titulo }}</h2>
+      <app-formula [latex]="e.enunciadoLatex" [display]="true" />
+      <form (submit)="$event.preventDefault(); calificar()">
+        <div class="campo" style="margin-top:12px">
+          <label for="resp">Tu respuesta</label>
+          <input id="resp" type="text" autocomplete="off" spellcheck="false" class="mono" [value]="respuesta()" (input)="respuesta.set($any($event.target).value)" [attr.aria-describedby]="'ayuda-resp'" />
+          <span id="ayuda-resp" class="nota">{{ e.ayudaFormato }}</span>
+        </div>
+        <div class="fila" style="margin-top:12px">
+          <button class="btn" type="submit">Calificar</button>
+          <button class="btn secundario" type="button" (click)="pistaVisible.set(true)">Pista</button>
+          <button class="btn secundario" type="button" (click)="verSolucion()">Ver procedimiento</button>
+        </div>
+      </form>
+
+      @if (calificacion(); as c) {
+        <p class="aviso" [class.ok]="c.estado === 'correcta'" [class.error]="c.estado === 'incorrecta'" [class.warn]="c.estado === 'invalida'" style="margin-top:12px" role="status">
+          @switch (c.estado) {
+            @case ('correcta') { ✓ }
+            @case ('incorrecta') { ✗ }
+            @default { ⚠ }
+          }
+          {{ c.mensaje }}
+        </p>
+        @if (c.estado === 'incorrecta') { <p class="nota">Puedes corregir y calificar de nuevo, pedir una pista o ver el procedimiento completo.</p> }
+      }
+      @if (pistaVisible()) { <p class="aviso warn" style="margin-top:12px"><strong>Pista:</strong> {{ e.pista }}</p> }
+    </section>
+
+    @if (solucion(); as s) {
+      <p class="aviso ok">Respuesta correcta: <strong>{{ e.respuestaTexto }}</strong></p>
+      <app-caja-resultado [resultado]="s" />
+    }
+  }
+</div>

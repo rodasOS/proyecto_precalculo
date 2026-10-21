@@ -1,0 +1,33 @@
+<div class="entrada">
+  <label [for]="id">{{ etiqueta() }}</label>
+  <input
+    #campo
+    [id]="id"
+    type="text"
+    class="entrada-campo"
+    autocomplete="off"
+    autocapitalize="off"
+    spellcheck="false"
+    inputmode="text"
+    [attr.aria-describedby]="id + '-vista'"
+    [attr.aria-invalid]="vista().tipo === 'error'"
+    [placeholder]="placeholder()"
+    [value]="valor()"
+    (input)="alEscribir($event)"
+    (keydown.enter)="enviar.emit()"
+  />
+  @if (teclado()) {
+    <div class="teclas" role="group" aria-label="Símbolos">
+      @for (t of teclas; track t.texto) {
+        <button type="button" class="tecla" [title]="t.titulo" (click)="insertar(t)">{{ t.texto }}</button>
+      }
+    </div>
+  }
+  <div class="vista" [id]="id + '-vista'" aria-live="polite">
+    @switch (vista().tipo) {
+      @case ('ok') { <span class="nota">Se interpreta como:</span> <app-formula [latex]="vista().tex" /> }
+      @case ('error') { <span class="err">⚠ {{ vista().msg }}</span> }
+      @default { @if (ayuda()) { <span class="nota">{{ ayuda() }}</span> } }
+    }
+  </div>
+</div>

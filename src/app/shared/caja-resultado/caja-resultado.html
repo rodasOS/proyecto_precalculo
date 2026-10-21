@@ -1,0 +1,59 @@
+@let r = resultado();
+<section class="caja" [class.error]="r.estado === 'error'" [attr.aria-live]="'polite'">
+  <header class="cab">
+    <h2>{{ r.titulo }}</h2>
+    <span class="estado" [class]="r.estado">{{ etiquetaEstado() }}</span>
+  </header>
+
+  @if (r.advertencias.length) {
+    <ul class="avisos" [class.error]="r.estado === 'error'">
+      @for (a of r.advertencias; track $index) { <li>{{ a }}</li> }
+    </ul>
+  }
+
+  @if (r.estado !== 'error') {
+    @if (r.formula) {
+      <div class="bloque">
+        <h3>Fórmula</h3>
+        <app-formula [latex]="r.formula" [display]="true" />
+      </div>
+    }
+    @if (r.sustitucion) {
+      <div class="bloque">
+        <h3>Datos y sustitución</h3>
+        <app-formula [latex]="r.sustitucion" [display]="true" />
+      </div>
+    }
+    @if (r.pasos.length) {
+      <div class="bloque">
+        <h3>Procedimiento</h3>
+        <ol class="pasos">
+          @for (p of r.pasos; track $index) {
+            <li>
+              <span class="regla">{{ p.regla }}</span>
+              <span class="desc">{{ p.descripcion }}</span>
+              <app-formula [latex]="p.latex" [display]="true" />
+            </li>
+          }
+        </ol>
+      </div>
+    }
+    @if (r.respuesta.latex) {
+      <div class="respuesta">
+        <h3>Respuesta final</h3>
+        <app-formula [latex]="r.respuesta.latex" [display]="true" />
+      </div>
+    }
+    @if (r.interpretacion) {
+      <div class="bloque">
+        <h3>Interpretación</h3>
+        <p>{{ r.interpretacion }}</p>
+      </div>
+    }
+    @if (r.verificacion; as v) {
+      <div class="verif" [class.mal]="!v.coincide">
+        <strong>{{ v.coincide ? '✓ Verificado' : '✗ No verificado' }}</strong> · {{ v.metodo }}. {{ v.detalle }}
+      </div>
+    }
+  }
+</section>

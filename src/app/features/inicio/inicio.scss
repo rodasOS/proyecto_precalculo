@@ -1,0 +1,12 @@
+.hero { background: linear-gradient(135deg, #1f2a6b, #2f4bd0); color: #fff; border-radius: 16px; padding: 24px 22px; margin-bottom: 24px; h1 { font-size: 2rem; margin-bottom: 2px; } .lema { opacity: .9; font-weight: 500; } p { max-width: 70ch; } .btn { background: #fff; color: #1f2a6b; display: inline-flex; align-items: center; text-decoration: none; } }
+h2 { margin: 24px 0 10px; }
+.rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.modulo { margin: 0; display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: var(--app-text); transition: border-color .15s, transform .15s; }
+.modulo:hover { border-color: var(--app-primary); transform: translateY(-2px); }
+.ico { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; background: var(--app-primary-soft); color: var(--app-primary); font-weight: 700; font-style: italic; font-size: 1.1rem; }
+.txt { color: var(--app-muted); font-size: .9rem; }
+.tabla-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 420px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--app-border); }
+th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--app-muted); }
+.dos-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; h3 { margin-bottom: 4px; } ul { margin: 0; padding-left: 1.2rem; } }

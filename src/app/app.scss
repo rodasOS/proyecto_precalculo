@@ -1,0 +1,39 @@
+:host { display: block; min-height: 100vh; }
+.saltar { position: absolute; left: -999px; top: 0; background: #fff; padding: 8px 12px; z-index: 100; }
+.saltar:focus { left: 8px; top: 8px; }
+
+.cabecera {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 20px;
+  padding: 10px var(--app-gutter);
+  background: #1f2a6b; color: #fff;
+}
+.marca { display: flex; align-items: center; gap: 10px; }
+.logo { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; }
+.logo strong { display: block; font-size: 1.15rem; letter-spacing: .02em; }
+.logo small { display: block; font-size: .78rem; opacity: .85; }
+.logo-simbolo { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: #fff; color: #1f2a6b; font-size: 1.5rem; font-weight: 700; }
+.hamburguesa { display: none; font-size: 1.4rem; min-width: 44px; min-height: 44px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.45); border-radius: 8px; cursor: pointer; }
+.identidad { display: flex; flex-direction: column; font-size: .8rem; text-align: right; line-height: 1.35; }
+.integrantes { font-weight: 700; font-size: .88rem; }
+.detalle { opacity: .85; }
+
+.cuerpo { display: grid; grid-template-columns: 220px minmax(0, 1fr); align-items: start; }
+.menu {
+  position: sticky; top: 64px; display: flex; flex-direction: column; gap: 2px; padding: 14px 10px;
+  height: calc(100vh - 64px); overflow-y: auto; background: #fff; border-right: 1px solid var(--app-border);
+}
+.menu a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; color: var(--app-text); text-decoration: none; font-weight: 500; min-height: 44px; }
+.menu a:hover { background: var(--app-primary-soft); }
+.menu a.activo { background: var(--app-primary); color: #fff; }
+.icono { display: inline-grid; place-items: center; min-width: 28px; font-weight: 700; font-style: italic; }
+.contenido { min-width: 0; outline: none; }
+
+@media (max-width: 900px) {
+  .hamburguesa { display: inline-block; }
+  .identidad { text-align: left; width: 100%; }
+  .cuerpo { grid-template-columns: minmax(0, 1fr); }
+  .menu { display: none; position: static; height: auto; border-right: none; border-bottom: 1px solid var(--app-border); flex-direction: row; flex-wrap: wrap; }
+  .menu.abierto { display: flex; }
+  .menu a { flex: 1 1 45%; }
+}

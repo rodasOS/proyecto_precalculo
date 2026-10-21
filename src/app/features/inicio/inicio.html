@@ -1,0 +1,56 @@
+<div class="pagina">
+  <section class="hero">
+    <h1>{{ id.nombre }}</h1>
+    <p class="lema">{{ id.lema }} · {{ id.facultad }}</p>
+    <p>Escribe una función, una ecuación o un problema y el asistente lo <strong>resuelve de verdad</strong>: muestra la fórmula, la sustitución de valores, el procedimiento paso a paso y la respuesta final, y comprueba el resultado con un segundo método. Todo ocurre en tu navegador, sin cuentas ni inicio de sesión.</p>
+    <p><a class="btn" routerLink="/aplicaciones" [queryParams]="{ tab: 'funcion', f: 'x^3 - 6x^2 + 9x + 1' }">Probar con f(x) = x³ − 6x² + 9x + 1</a></p>
+  </section>
+
+  <h2>Módulos</h2>
+  <div class="rejilla">
+    @for (m of modulos; track m.ruta) {
+      <a class="modulo tarjeta" [routerLink]="m.ruta">
+        <span class="ico" aria-hidden="true">{{ m.icono }}</span>
+        <strong>{{ m.titulo }}</strong>
+        <span class="txt">{{ m.texto }}</span>
+      </a>
+    }
+  </div>
+
+  <h2>Cómo escribir las expresiones</h2>
+  <div class="tarjeta">
+    <div class="tabla-scroll">
+      <table>
+        <thead><tr><th>Escribe</th><th>Significa</th></tr></thead>
+        <tbody>
+          @for (s of sintaxis; track s[0]) { <tr><td><code>{{ s[0] }}</code></td><td>{{ s[1] }}</td></tr> }
+        </tbody>
+      </table>
+    </div>
+    <p class="nota">Variable: <code>x</code> (en razones de cambio también <code>t</code>). Debajo de cada campo verás cómo se interpretó lo que escribiste; si algo está mal, el asistente te avisa en vez de inventar un resultado.</p>
+  </div>
+
+  <h2>Alcance y limitaciones</h2>
+  <div class="tarjeta dos-col">
+    <div>
+      <h3>Sí resuelve</h3>
+      <ul>
+        <li>Polinomios, racionales, raíces, valor absoluto, exponenciales, logaritmos y trigonométricas básicas.</li>
+        <li>Límites con formas indeterminadas habituales y en el infinito.</li>
+        <li>Derivadas con las reglas del curso y derivadas de orden superior.</li>
+        <li>Integrales elementales: tabla, sustitución y partes sencillas.</li>
+        <li>Optimización y razones relacionadas mediante plantillas con datos.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Te avisa cuando</h3>
+      <ul>
+        <li>Falta un dato, la entrada está mal escrita o la expresión no tiene sentido.</li>
+        <li>Una integral no tiene antiderivada elemental o es impropia.</li>
+        <li>No puede determinar un límite o un rango con seguridad.</li>
+        <li>La comprobación numérica no coincide con el resultado simbólico.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="nota">{{ id.universidad }} · {{ id.asignatura }} · {{ id.seccion }} · Entrega {{ id.entrega }}.</p>
+</div>

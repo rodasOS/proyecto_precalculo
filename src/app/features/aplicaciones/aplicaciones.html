@@ -1,0 +1,119 @@
+<div class="pagina">
+  <header>
+    <h1>Aplicaciones del cálculo</h1>
+    <p>Analiza funciones (máximos, mínimos y crecimiento), halla extremos en un intervalo, calcula razones de cambio y resuelve problemas contextualizados de optimización y de razones relacionadas, con la respuesta redactada en el contexto del problema.</p>
+  </header>
+
+  <mat-tab-group [selectedIndex]="tab()" (selectedIndexChange)="cambiarTab($event)" animationDuration="0ms">
+    <mat-tab label="Análisis de una función">
+      <form class="tarjeta" (submit)="$event.preventDefault(); analizar()">
+        <app-entrada-expresion etiqueta="Función f(x)" placeholder="x^3 - 6x^2 + 9x + 1" ayuda="Puntos críticos, clasificación de extremos, monotonía, inflexión e intersecciones." [(valor)]="f1" (enviar)="analizar()" />
+        <div class="fila" style="margin-top:12px"><button class="btn" type="submit" [disabled]="cargando()">{{ cargando() ? 'Calculando…' : 'Analizar' }}</button></div>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Extremos en un intervalo">
+      <form class="tarjeta" (submit)="$event.preventDefault(); extremos()">
+        <app-entrada-expresion etiqueta="Función f(x)" placeholder="x^3 - 6x^2 + 9x + 1" [(valor)]="f2" (enviar)="extremos()" />
+        <div class="fila" style="margin-top:12px">
+          <div class="campo corto"><label for="a2">Desde a =</label><input id="a2" type="text" [value]="a2()" (input)="a2.set($any($event.target).value)" placeholder="0" /></div>
+          <div class="campo corto"><label for="b2">Hasta b =</label><input id="b2" type="text" [value]="b2()" (input)="b2.set($any($event.target).value)" placeholder="4" /></div>
+          <button class="btn" type="submit" [disabled]="cargando()">Hallar extremos absolutos</button>
+        </div>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Razón de cambio">
+      <form class="tarjeta" (submit)="$event.preventDefault(); razon()">
+        <app-entrada-expresion etiqueta="Función (por ejemplo posición s(t) o x²)" placeholder="t^2" [(valor)]="f3" (enviar)="razon()" />
+        <div class="fila" style="margin-top:12px">
+          <div class="campo corto"><label for="a3">Promedio desde a =</label><input id="a3" type="text" [value]="a3()" (input)="a3.set($any($event.target).value)" placeholder="1" /></div>
+          <div class="campo corto"><label for="b3">hasta b =</label><input id="b3" type="text" [value]="b3()" (input)="b3.set($any($event.target).value)" placeholder="3" /></div>
+          <div class="campo corto"><label for="p3">Instantánea en p =</label><input id="p3" type="text" [value]="p3()" (input)="p3.set($any($event.target).value)" placeholder="2" /></div>
+        </div>
+        <div class="fila" style="margin-top:12px">
+          <div class="campo corto"><label for="uy">Unidad de la función</label><input id="uy" type="text" [value]="uy()" (input)="uy.set($any($event.target).value)" placeholder="m" /></div>
+          <div class="campo corto"><label for="ux">Unidad de la variable</label><input id="ux" type="text" [value]="ux()" (input)="ux.set($any($event.target).value)" placeholder="s" /></div>
+          <button class="btn" type="submit" [disabled]="cargando()">Calcular razones</button>
+        </div>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Optimización">
+      <form class="tarjeta" (submit)="$event.preventDefault(); optimizar()">
+        <div class="campo" style="margin-bottom:12px">
+          <label for="plopt">Problema</label>
+          <select id="plopt" [value]="idOpt()" (change)="idOpt.set($any($event.target).value); valoresOpt.set({})">
+            @for (p of plantillasOpt; track p.id) { <option [value]="p.id">{{ p.titulo }}</option> }
+          </select>
+        </div>
+        <p class="enunciado">{{ plOpt().enunciado }}</p>
+        <div class="fila">
+          @for (e of plOpt().entradas; track e.id) {
+            <div class="campo corto">
+              <label [for]="'opt-' + e.id">{{ e.label }} ({{ e.unidad }})</label>
+              <input [id]="'opt-' + e.id" type="text" inputmode="decimal" [value]="valorOpt(e.id)" (input)="setOpt(e.id, $any($event.target).value)" [placeholder]="'' + e.ejemplo" />
+            </div>
+          }
+          <button class="btn" type="submit" [disabled]="cargando()">Optimizar</button>
+          <button class="btn suave" type="button" (click)="ejemploOpt()">Usar datos de ejemplo</button>
+        </div>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Razones relacionadas">
+      <form class="tarjeta" (submit)="$event.preventDefault(); relacionadas()">
+        <div class="campo" style="margin-bottom:12px">
+          <label for="plraz">Situación</label>
+          <select id="plraz" [value]="idRaz()" (change)="idRaz.set($any($event.target).value); paramsRaz.set({})">
+            @for (p of plantillasRazon; track p.id) { <option [value]="p.id">{{ p.titulo }}</option> }
+          </select>
+        </div>
+        <p class="enunciado">{{ plRaz().enunciado }}</p>
+        <div class="fila">
+          <div class="campo">
+            <label for="conocida">¿Qué razón conoces?</label>
+            <select id="conocida" [value]="conocida()" (change)="conocida.set($any($event.target).value)">
+              <option value="Q">d{{ plRaz().Q.nombre }}/dt (cambio de {{ plRaz().Q.nombre }}) → pido d{{ plRaz().X.nombre }}/dt</option>
+              <option value="X">d{{ plRaz().X.nombre }}/dt (cambio de {{ plRaz().X.nombre }}) → pido d{{ plRaz().Q.nombre }}/dt</option>
+            </select>
+          </div>
+          <div class="campo corto">
+            <label for="tasa">Valor de la razón conocida</label>
+            <input id="tasa" type="text" inputmode="decimal" [value]="tasa()" (input)="tasa.set($any($event.target).value)" placeholder="100" />
+          </div>
+          <div class="campo corto">
+            <label for="x0">Valor de {{ plRaz().X.nombre }} ({{ plRaz().X.unidad }})</label>
+            <input id="x0" type="text" inputmode="decimal" [value]="x0()" (input)="x0.set($any($event.target).value)" placeholder="5" />
+          </div>
+          @for (e of plRaz().params; track e.id) {
+            <div class="campo corto">
+              <label [for]="'raz-' + e.id">{{ e.label }} ({{ e.unidad }})</label>
+              <input [id]="'raz-' + e.id" type="text" inputmode="decimal" [value]="valorRaz(e.id)" (input)="setRaz(e.id, $any($event.target).value)" [placeholder]="'' + e.ejemplo" />
+            </div>
+          }
+          <div class="campo corto">
+            <label for="tiempo">Unidad de tiempo</label>
+            <select id="tiempo" [value]="tiempo()" (change)="tiempo.set($any($event.target).value)"><option>s</option><option>min</option><option>h</option></select>
+          </div>
+        </div>
+        <div class="fila" style="margin-top:12px">
+          <button class="btn" type="submit" [disabled]="cargando()">Resolver</button>
+          @if (plRaz().params.length) { <button class="btn suave" type="button" (click)="ejemploRaz()">Usar datos de ejemplo</button> }
+        </div>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+
+  @if (cargando()) { <p class="nota">Calculando…</p> }
+  @if (curvas().length) {
+    <section class="tarjeta">
+      <h2>Gráfica</h2>
+      <app-grafico [curvas]="curvas()" [puntos]="resultado()?.grafica?.puntos ?? []" [asintotasV]="resultado()?.grafica?.asintotasVerticales ?? []" [asintotasH]="resultado()?.grafica?.asintotasHorizontales ?? []" [xmin0]="xmin()" [xmax0]="xmax()" />
+      <ul class="leyenda-puntos">
+        @for (p of resultado()?.grafica?.puntos ?? []; track $index) { <li>{{ p.etiqueta }}</li> }
+      </ul>
+    </section>
+  }
+  @if (resultado(); as r) { <app-caja-resultado [resultado]="r" /> }
+</div>

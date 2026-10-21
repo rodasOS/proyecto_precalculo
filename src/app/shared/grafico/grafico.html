@@ -1,0 +1,40 @@
+<figure class="grafico">
+  <svg
+    [attr.viewBox]="'0 0 ' + W + ' ' + H"
+    role="img"
+    [attr.aria-label]="'Gráfica de ' + (curvas().length ? curvas()[0].texto : 'la función')"
+    (wheel)="alRueda($event)"
+    (pointerdown)="alPulsar($event)"
+    (pointermove)="alMover($event)"
+    (pointerup)="alSoltar()"
+    (pointercancel)="alSoltar()"
+  >
+    <defs><clipPath id="recorte"><rect x="0" y="0" [attr.width]="W" [attr.height]="H" /></clipPath></defs>
+    <rect x="0" y="0" [attr.width]="W" [attr.height]="H" fill="#fff" />
+    <g clip-path="url(#recorte)">
+      @for (m of marcasX(); track m.v) { <line [attr.x1]="m.px" [attr.x2]="m.px" y1="0" [attr.y2]="H" class="rejilla" /> }
+      @for (m of marcasY(); track m.v) { <line x1="0" [attr.x2]="W" [attr.y1]="m.py" [attr.y2]="m.py" class="rejilla" /> }
+      <line x1="0" [attr.x2]="W" [attr.y1]="ejeXy()" [attr.y2]="ejeXy()" class="eje" />
+      <line [attr.x1]="ejeYx()" [attr.x2]="ejeYx()" y1="0" [attr.y2]="H" class="eje" />
+      @for (x of lineasV(); track x) { <line [attr.x1]="x" [attr.x2]="x" y1="0" [attr.y2]="H" class="asintota" /> }
+      @for (y of lineasH(); track y) { <line x1="0" [attr.x2]="W" [attr.y1]="y" [attr.y2]="y" class="asintota" /> }
+      @for (t of trazos(); track $index) { <path [attr.d]="t.d" fill="none" [attr.stroke]="t.color" stroke-width="2.4" stroke-linejoin="round" /> }
+      @for (p of puntosVista(); track $index) {
+        <circle [attr.cx]="p.px" [attr.cy]="p.py" r="5.5" [attr.fill]="p.color" stroke="#fff" stroke-width="1.5"><title>{{ p.etiqueta }}</title></circle>
+      }
+    </g>
+    @for (m of marcasX(); track m.v) { <text [attr.x]="m.px" [attr.y]="ejeXy() + 14" class="marca" text-anchor="middle">{{ m.v }}</text> }
+    @for (m of marcasY(); track m.v) { <text [attr.x]="ejeYx() + 4" [attr.y]="m.py - 3" class="marca">{{ m.v }}</text> }
+  </svg>
+  <div class="controles">
+    <button type="button" class="btn suave" (click)="zoom(1 / 1.4)" aria-label="Acercar">＋</button>
+    <button type="button" class="btn suave" (click)="zoom(1.4)" aria-label="Alejar">－</button>
+    <button type="button" class="btn suave" (click)="restablecer()">Restablecer vista</button>
+    <span class="nota">Arrastra para mover · rueda del ratón para acercar</span>
+  </div>
+  @if (curvas().length > 1) {
+    <ul class="leyenda">
+      @for (t of trazos(); track $index) { <li><span class="cuadro" [style.background]="t.color"></span><code>{{ t.texto }}</code></li> }
+    </ul>
+  }
+</figure>

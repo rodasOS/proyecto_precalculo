@@ -1,0 +1,104 @@
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+:root {
+  --app-bg: #f4f6fb;
+  --app-surface: #ffffff;
+  --app-border: #dde2ee;
+  --app-text: #1a1f36;
+  --app-muted: #5b6482;
+  --app-primary: #2f4bd0;
+  --app-primary-soft: #e8ecfd;
+  --app-ok: #0b7a55;
+  --app-ok-soft: #e3f6ee;
+  --app-warn: #a85a00;
+  --app-warn-soft: #fff3df;
+  --app-danger: #b42318;
+  --app-danger-soft: #fdecea;
+  --app-radius: 12px;
+  --app-gutter: 16px;
+}
+
+body {
+  color-scheme: light;
+  margin: 0;
+  min-height: 100%;
+  background: var(--app-bg);
+  color: var(--app-text);
+  font: var(--mat-sys-body-medium);
+  font-family: Roboto, 'Segoe UI', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+}
+
+* { box-sizing: border-box; }
+h1, h2, h3 { line-height: 1.25; margin: 0 0 .5rem; }
+h1 { font-size: 1.6rem; }
+h2 { font-size: 1.2rem; }
+p { margin: 0 0 .75rem; }
+a { color: var(--app-primary); }
+code, .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace; font-size: .92em; }
+
+.pagina { max-width: 980px; margin: 0 auto; padding: 20px var(--app-gutter) 56px; }
+.pagina > header p { color: var(--app-muted); max-width: 70ch; }
+
+.tarjeta {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.fila { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.campo { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1 1 180px; }
+.campo.corto { flex: 0 1 130px; }
+.campo label, .etiqueta { font-size: .82rem; font-weight: 600; color: var(--app-muted); }
+
+.campo input, .campo select, input.entrada, select.entrada {
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--app-text);
+  min-height: 44px;
+  width: 100%;
+}
+.campo input:focus, .campo select:focus { outline: 2px solid var(--app-primary); outline-offset: 1px; border-color: var(--app-primary); }
+
+.btn {
+  font: inherit; font-weight: 600; cursor: pointer;
+  min-height: 44px; padding: 0 18px;
+  border-radius: 8px; border: 1px solid transparent;
+  background: var(--app-primary); color: #fff;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:focus-visible { outline: 3px solid #9bb0ff; outline-offset: 2px; }
+.btn.secundario { background: #fff; color: var(--app-primary); border-color: var(--app-primary); }
+.btn.suave { background: var(--app-primary-soft); color: var(--app-primary); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+.nota { color: var(--app-muted); font-size: .9rem; }
+.aviso { border-radius: 8px; padding: 10px 12px; font-size: .92rem; }
+.aviso.warn { background: var(--app-warn-soft); color: var(--app-warn); border: 1px solid #f3cf9b; }
+.aviso.error { background: var(--app-danger-soft); color: var(--app-danger); border: 1px solid #f3b6b0; }
+.aviso.ok { background: var(--app-ok-soft); color: var(--app-ok); border: 1px solid #a6dfc8; }
+
+.mdc-tab { font-weight: 600; }
+.mat-mdc-tab-body-content { padding-top: 12px; }
+
+@media (max-width: 600px) {
+  h1 { font-size: 1.35rem; }
+  .campo.corto { flex: 1 1 100px; }
+}

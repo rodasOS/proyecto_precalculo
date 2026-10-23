@@ -1,9 +1,9 @@
-# Tangente — Asistente de Cálculo y Precálculo
+# Tangente — Asistente de Cálculo
 
 App web estática (Angular, sin backend ni claves). El motor de cálculo corre en el navegador, en un Web Worker con tiempo límite.
 
 ## Antes de entregar
-1. Editar `src/app/data/identidad.ts`: nombres de ambos integrantes y sección.
+1. Verificar `src/app/data/identidad.ts` (nombres, carnés y sección ya están cargados).
 2. Desplegar (gratis, sin login para el docente):
    - Build: `npm ci && npm run build` · Carpeta de salida: `dist/asistente/browser`
    - Cloudflare Pages, Netlify o Vercel. Las rutas usan `#/`, así que recargar no da 404.

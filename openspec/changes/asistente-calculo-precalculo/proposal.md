@@ -2,7 +2,7 @@
 
 ## Why
 
-La asignatura de Cálculo y Precálculo (UMG, Facultad de Ingeniería, 15 puntos, entrega domingo 25/10/2026) exige un asistente virtual publicado en un enlace gratuito, sin login, que resuelva y explique ejercicios reales de álgebra, gráficas, límites, derivadas, integrales y aplicaciones. El docente lo probará con ejercicios nuevos, y la precisión de los cálculos y la claridad del procedimiento pesan 6.5 de los 15 puntos. Ya existe un diseño de un proyecto hermano (Estadística Aplicada) con la misma filosofía; su núcleo numérico no sirve aquí porque el cálculo requiere álgebra simbólica, no solo estadística sobre listas de números.
+La asignatura de Cálculo (UMG, Facultad de Ingeniería, 15 puntos, entrega domingo 25/10/2026) exige un asistente virtual publicado en un enlace gratuito, sin login, que resuelva y explique ejercicios reales de álgebra, gráficas, límites, derivadas, integrales y aplicaciones. El docente lo probará con ejercicios nuevos, y la precisión de los cálculos y la claridad del procedimiento pesan 6.5 de los 15 puntos. Ya existe un diseño de un proyecto hermano (Estadística Aplicada) con la misma filosofía; su núcleo numérico no sirve aquí porque el cálculo requiere álgebra simbólica, no solo estadística sobre listas de números.
 
 ## What Changes
 

@@ -4,9 +4,9 @@
 
 Motivación y alcance en `proposal.md`; requisitos en `specs/`. Punto de partida: `openspec/desing.md`, el diseño del asistente de Estadística Aplicada (app Angular estática, sin backend, sin IA en los cálculos, patrón `Resultado`, KaTeX, hosting gratuito). Ese diseño se reutiliza casi completo salvo el núcleo.
 
-Qué cambia al pasar de Estadística a Cálculo/Precálculo:
+Qué cambia al pasar de Estadística a Cálculo:
 
-| Aspecto | Estadística (diseño previo) | Cálculo y Precálculo (este cambio) |
+| Aspecto | Estadística (diseño previo) | Cálculo (este cambio) |
 |---|---|---|
 | Entrada | listas de números | expresiones, ecuaciones, límites e intervalos |
 | Núcleo | funciones numéricas escritas a mano | **motor simbólico**: parser + CAS + motor de pasos propio |

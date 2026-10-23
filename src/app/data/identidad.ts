@@ -3,10 +3,10 @@
  */
 export const IDENTIDAD = {
   nombre: 'Tangente',
-  lema: 'Asistente de Cálculo',
+  lema: 'Asistente virtual de Precálculo',
   universidad: 'Universidad Mariano Gálvez de Guatemala',
   facultad: 'Facultad de Ingeniería',
-  asignatura: 'Cálculo',
+  asignatura: 'Precálculo',
   seccion: 'A',
   integrantes: [
     { nombre: 'Selvyn Juan de Marco Gutiérrez Castellanos', carne: '2990-26-4129' },

@@ -1,39 +1,138 @@
 :host { display: block; min-height: 100vh; }
-.saltar { position: absolute; left: -999px; top: 0; background: #fff; padding: 8px 12px; z-index: 100; }
+
+.saltar { position: absolute; left: -999px; top: 0; background: #fff; color: var(--app-primary); padding: 10px 14px; z-index: 100; border-radius: 8px; }
 .saltar:focus { left: 8px; top: 8px; }
 
+/* ── Cabecera: banda protagonista con los datos del grupo ── */
 .cabecera {
-  position: sticky; top: 0; z-index: 20;
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 20px;
-  padding: 10px var(--app-gutter);
-  background: #1f2a6b; color: #fff;
+  color: #fff;
+  background:
+    radial-gradient(700px 260px at 100% 0%, rgba(125, 211, 252, .35), transparent 60%),
+    linear-gradient(135deg, #312e81 0%, #4338ca 55%, #5b21b6 100%);
+  box-shadow: 0 10px 30px rgba(49, 46, 129, .25);
 }
-.marca { display: flex; align-items: center; gap: 10px; }
-.logo { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; }
-.logo strong { display: block; font-size: 1.15rem; letter-spacing: .02em; }
-.logo small { display: block; font-size: .78rem; opacity: .85; }
-.logo-simbolo { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: #fff; color: #1f2a6b; font-size: 1.5rem; font-weight: 700; }
-.hamburguesa { display: none; font-size: 1.4rem; min-width: 44px; min-height: 44px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.45); border-radius: 8px; cursor: pointer; }
-.identidad { display: flex; flex-direction: column; font-size: .8rem; text-align: right; line-height: 1.35; }
-.integrantes { font-weight: 700; font-size: .88rem; }
-.detalle { opacity: .85; }
+.cabecera-inner {
+  max-width: 1240px; margin: 0 auto; padding: 18px var(--app-gutter) 20px;
+  display: grid; gap: 16px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "marca marca"
+    "equipo datos";
+}
+.marca-fila { grid-area: marca; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.logo { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; border-radius: 12px; }
+.logo-simbolo {
+  display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px;
+  background: #fff; color: #4338ca; font-size: 1.6rem; font-weight: 800;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
+}
+.logo-texto strong { display: block; font-size: 1.45rem; font-weight: 800; letter-spacing: -.01em; line-height: 1.1; }
+.logo-texto small { display: block; font-size: .95rem; opacity: .9; font-weight: 500; }
+.chip-curso {
+  background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .35);
+  padding: 8px 16px; border-radius: 999px; font-weight: 700; font-size: .95rem; white-space: nowrap;
+}
 
-.cuerpo { display: grid; grid-template-columns: 220px minmax(0, 1fr); align-items: start; }
-.menu {
-  position: sticky; top: 64px; display: flex; flex-direction: column; gap: 2px; padding: 14px 10px;
-  height: calc(100vh - 64px); overflow-y: auto; background: #fff; border-right: 1px solid var(--app-border);
+.equipo { grid-area: equipo; min-width: 0; }
+.etiqueta-equipo { font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; opacity: .85; margin: 0 0 10px; }
+.integrantes { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.integrante {
+  display: flex; align-items: center; gap: 12px; min-width: 0;
+  background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 14px; padding: 10px 12px;
+  backdrop-filter: blur(4px);
 }
-.menu a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; color: var(--app-text); text-decoration: none; font-weight: 500; min-height: 44px; }
-.menu a:hover { background: var(--app-primary-soft); }
-.menu a.activo { background: var(--app-primary); color: #fff; }
-.icono { display: inline-grid; place-items: center; min-width: 28px; font-weight: 700; font-style: italic; }
+.avatar {
+  flex: 0 0 auto; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%;
+  background: #fff; color: #4338ca; font-weight: 800; font-size: 1.1rem;
+}
+.datos { display: flex; flex-direction: column; min-width: 0; }
+.datos strong { font-size: 1rem; font-weight: 700; line-height: 1.3; overflow-wrap: anywhere; }
+.carne { font-size: .88rem; opacity: .9; font-variant-numeric: tabular-nums; }
+
+.datos-academicos {
+  grid-area: datos; margin: 0; display: grid; gap: 8px; align-content: start;
+  grid-template-columns: repeat(2, minmax(0, auto));
+}
+.datos-academicos > div { background: rgba(255, 255, 255, .12); border-radius: 12px; padding: 8px 12px; border: 1px solid rgba(255, 255, 255, .2); }
+.datos-academicos .ancho { grid-column: 1 / -1; }
+.datos-academicos dt { font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; opacity: .85; font-weight: 700; }
+.datos-academicos dd { margin: 0; font-weight: 700; font-size: 1rem; }
+
+/* ── Cuerpo: menú + contenido ── */
+.cuerpo { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: 0; align-items: start; }
+
+.menu-barra { position: sticky; top: 16px; margin: 20px 0 0 var(--app-gutter); }
+.menu {
+  background: var(--app-surface); border: 1px solid var(--app-border); border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow); padding: 8px;
+}
+.menu-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.menu a {
+  display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 8px 12px; border-radius: 12px;
+  color: var(--app-text); text-decoration: none; font-weight: 600; font-size: .96rem;
+  transition: background .15s var(--app-ease), color .15s var(--app-ease), transform .15s var(--app-ease);
+}
+.menu a:hover { background: var(--app-primary-soft); transform: translateX(2px); }
+.menu a.activo { background: linear-gradient(135deg, #4f46e5, #4338ca); color: #fff; box-shadow: 0 4px 12px rgba(67, 56, 202, .3); }
+.icono {
+  flex: 0 0 auto; display: grid; place-items: center; min-width: 30px; height: 30px; padding: 0 4px;
+  border-radius: 8px; background: var(--app-surface-2); color: var(--app-primary); font-weight: 800; font-size: .9rem;
+}
+.menu a.activo .icono { background: rgba(255, 255, 255, .2); color: #fff; }
+
 .contenido { min-width: 0; outline: none; }
 
+/* ── Móvil: header compacto y menú como fila deslizable ── */
+.info-toggle { display: none; }
+.info-grupo { display: contents; }
+
 @media (max-width: 900px) {
-  .hamburguesa { display: inline-block; }
-  .identidad { text-align: left; width: 100%; }
   .cuerpo { grid-template-columns: minmax(0, 1fr); }
-  .menu { display: none; position: static; height: auto; border-right: none; border-bottom: 1px solid var(--app-border); flex-direction: row; flex-wrap: wrap; }
-  .menu.abierto { display: flex; }
-  .menu a { flex: 1 1 45%; }
+
+  .menu-barra {
+    position: sticky; top: 0; z-index: 10; margin: 0; background: var(--app-bg);
+    padding: 0;
+  }
+  /* degradado que indica que la fila sigue hacia la derecha */
+  .menu-barra::after {
+    content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 40px; pointer-events: none;
+    background: linear-gradient(to right, rgba(245, 246, 251, 0), var(--app-bg));
+  }
+  .menu {
+    overflow-x: auto; scrollbar-width: none; border: none; border-radius: 0; box-shadow: none;
+    background: transparent; padding: 10px var(--app-gutter);
+  }
+  .menu::-webkit-scrollbar { display: none; }
+  .menu-lista { display: flex; gap: 8px; width: max-content; }
+  .menu a { min-height: 44px; padding: 6px 14px 6px 8px; border-radius: 999px; white-space: nowrap; background: var(--app-surface); border: 1px solid var(--app-border); }
+  .menu a:hover { transform: none; }
+  .menu a.activo { background: linear-gradient(135deg, #4f46e5, #4338ca); border-color: transparent; }
+  .icono { min-width: 28px; height: 28px; }
+
+  /* cabecera compacta: logo + botón del equipo */
+  .cabecera-inner {
+    padding: 14px var(--app-gutter) 14px; gap: 10px;
+    grid-template-columns: minmax(0, 1fr); grid-template-areas: "marca" "toggle" "info";
+  }
+  .info-toggle {
+    grid-area: toggle; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    width: 100%; min-height: 46px; padding: 10px 16px; cursor: pointer;
+    font: inherit; font-weight: 700; font-size: .95rem; color: #fff; text-align: left;
+    background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .32); border-radius: 999px;
+    transition: background .15s var(--app-ease);
+  }
+  .info-toggle:hover { background: rgba(255, 255, 255, .22); }
+  .info-toggle:focus-visible { outline: 3px solid #c7d2fe; outline-offset: 2px; }
+  .flecha { font-size: 1.1rem; line-height: 1; }
+  .info-grupo { grid-area: info; display: block; }
+  .info-grupo.cerrado { display: none; }
+  .equipo { margin-top: 12px; }
+  .datos-academicos { margin-top: 10px; grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .logo-simbolo { width: 42px; height: 42px; font-size: 1.4rem; }
+  .logo-texto strong { font-size: 1.25rem; }
+  .integrantes { grid-template-columns: 1fr; }
 }

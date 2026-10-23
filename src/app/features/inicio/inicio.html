@@ -2,9 +2,20 @@
   <section class="hero">
     <h1>{{ id.nombre }}</h1>
     <p class="lema">{{ id.lema }} · {{ id.facultad }}</p>
-    <p>Escribe una función, una ecuación o un problema y el asistente lo <strong>resuelve de verdad</strong>: muestra la fórmula, la sustitución de valores, el procedimiento paso a paso y la respuesta final, y comprueba el resultado con un segundo método. Todo ocurre en tu navegador, sin cuentas ni inicio de sesión.</p>
+    <p class="titular-movil">Resuelve tu ejercicio paso a paso</p>
+    <p class="descripcion">Escribe una función, una ecuación o un problema y el asistente lo <strong>resuelve de verdad</strong>: muestra la fórmula, la sustitución de valores, el procedimiento paso a paso y la respuesta final, y comprueba el resultado con un segundo método. Todo ocurre en tu navegador, sin cuentas ni inicio de sesión.</p>
     <p><a class="btn" routerLink="/aplicaciones" [queryParams]="{ tab: 'funcion', f: 'x^3 - 6x^2 + 9x + 1' }">Probar con f(x) = x³ − 6x² + 9x + 1</a></p>
   </section>
+
+  <form class="buscador tarjeta" role="search" (submit)="$event.preventDefault(); analizar()">
+    <label for="buscar-funcion"><strong>¿Qué ejercicio quieres resolver?</strong></label>
+    <div class="buscador-fila">
+      <input id="buscar-funcion" name="funcion" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+             placeholder="Ej.: x^3 - 6x^2 + 9x + 1" [ngModel]="funcion()" (ngModelChange)="funcion.set($event)" />
+      <button class="btn" type="submit" [disabled]="!funcion().trim()">Analizar</button>
+    </div>
+    <p class="nota">Obtendrás puntos críticos, extremos, gráfica y procedimiento completo.</p>
+  </form>
 
   <h2>Módulos</h2>
   <div class="rejilla">

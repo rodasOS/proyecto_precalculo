@@ -1,23 +1,68 @@
 <a class="saltar" href="#contenido">Saltar al contenido</a>
+
 <header class="cabecera">
-  <div class="marca">
-    <button type="button" class="hamburguesa" (click)="menuAbierto.set(!menuAbierto())" [attr.aria-expanded]="menuAbierto()" aria-controls="menu" aria-label="Menú">☰</button>
-    <a routerLink="/" class="logo"><span class="logo-simbolo" aria-hidden="true">∂</span><span><strong>{{ id.nombre }}</strong><small>{{ id.lema }}</small></span></a>
-  </div>
-  <div class="identidad" aria-label="Datos de la entrega">
-    <span class="integrantes">@for (i of id.integrantes; track i.carne; let ultimo = $last) {{{ i.nombre }} ({{ i.carne }}){{ ultimo ? '' : ' · ' }}}</span>
-    <span class="detalle">{{ id.asignatura }} · Sección {{ id.seccion }} · {{ id.universidad }}</span>
+  <div class="cabecera-inner">
+    <div class="marca-fila">
+      <a routerLink="/" class="logo" aria-label="Ir al inicio de {{ id.nombre }}">
+        <span class="logo-simbolo" aria-hidden="true">∂</span>
+        <span class="logo-texto">
+          <strong>{{ id.nombre }}</strong>
+          <small>{{ id.lema }}</small>
+        </span>
+      </a>
+    </div>
+
+    <button
+      type="button"
+      class="info-toggle"
+      aria-controls="info-grupo"
+      [attr.aria-expanded]="infoAbierta()"
+      (click)="infoAbierta.set(!infoAbierta())"
+    >
+      <span class="info-toggle-texto">Integrantes · {{ id.asignatura }} · Sección {{ id.seccion }}</span>
+      <span class="flecha" aria-hidden="true">{{ infoAbierta() ? '▴' : '▾' }}</span>
+    </button>
+
+    <div id="info-grupo" class="info-grupo" [class.cerrado]="!infoAbierta()">
+      <section class="equipo" aria-labelledby="titulo-equipo">
+        <h2 id="titulo-equipo" class="etiqueta-equipo">Integrantes del grupo</h2>
+        <ul class="integrantes">
+          @for (i of id.integrantes; track i.carne) {
+            <li class="integrante">
+              <span class="avatar" aria-hidden="true">{{ i.nombre.charAt(0) }}</span>
+              <span class="datos">
+                <strong>{{ i.nombre }}</strong>
+                <span class="carne">Carné {{ i.carne }}</span>
+              </span>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <dl class="datos-academicos">
+        <div><dt>Curso</dt><dd>{{ id.asignatura }}</dd></div>
+        <div><dt>Sección</dt><dd>{{ id.seccion }}</dd></div>
+        <div class="ancho"><dt>Universidad</dt><dd>{{ id.universidad }}</dd></div>
+      </dl>
+    </div>
   </div>
 </header>
 
 <div class="cuerpo">
-  <nav id="menu" class="menu" [class.abierto]="menuAbierto()" aria-label="Módulos">
-    @for (e of enlaces; track e.ruta) {
-      <a [routerLink]="e.ruta" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: e.ruta === '/' }" (click)="menuAbierto.set(false)">
-        <span class="icono" aria-hidden="true">{{ e.icono }}</span>{{ e.texto }}
-      </a>
-    }
-  </nav>
+  <div class="menu-barra">
+    <nav class="menu" aria-label="Módulos">
+      <ul class="menu-lista">
+        @for (e of enlaces; track e.ruta) {
+          <li>
+            <a [routerLink]="e.ruta" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: e.ruta === '/' }">
+              <span class="icono" aria-hidden="true">{{ e.icono }}</span>
+              <span>{{ e.texto }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
   <main id="contenido" class="contenido" tabindex="-1">
     <router-outlet />
   </main>

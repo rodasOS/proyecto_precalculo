@@ -1,16 +1,26 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { IDENTIDAD } from '../../data/identidad';
 
 @Component({
   selector: 'app-inicio',
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './inicio.html',
   styleUrl: './inicio.scss',
 })
 export class Inicio {
+  private readonly router = inject(Router);
   protected readonly id = IDENTIDAD;
+  protected readonly funcion = signal('');
+
+  /** Lleva la función escrita al análisis completo (puntos críticos, extremos y gráfica). */
+  protected analizar(): void {
+    const f = this.funcion().trim();
+    if (!f) return;
+    void this.router.navigate(['/aplicaciones'], { queryParams: { tab: 'funcion', f } });
+  }
   protected readonly modulos = [
     { ruta: '/algebra', icono: 'ƒ', titulo: 'Álgebra y funciones', texto: 'Ecuaciones, desigualdades, factorización, dominio, rango y composición.' },
     { ruta: '/graficas', icono: '∿', titulo: 'Gráficas', texto: 'Curvas con intersecciones, extremos, inflexión, asíntotas y crecimiento.' },

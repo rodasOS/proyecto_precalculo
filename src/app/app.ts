@@ -13,7 +13,8 @@ interface Enlace { ruta: string; texto: string; icono: string }
 })
 export class App {
   protected readonly id = IDENTIDAD;
-  protected readonly menuAbierto = signal(false);
+  /** En móvil, el bloque de integrantes y datos del curso empieza colapsado. */
+  protected readonly infoAbierta = signal(false);
   protected readonly enlaces: Enlace[] = [
     { ruta: '/', texto: 'Inicio', icono: '⌂' },
     { ruta: '/algebra', texto: 'Álgebra y funciones', icono: 'ƒ' },

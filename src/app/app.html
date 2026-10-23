@@ -5,8 +5,8 @@
     <a routerLink="/" class="logo"><span class="logo-simbolo" aria-hidden="true">∂</span><span><strong>{{ id.nombre }}</strong><small>{{ id.lema }}</small></span></a>
   </div>
   <div class="identidad" aria-label="Datos de la entrega">
-    <span class="integrantes">{{ id.integrantes.join(' · ') }}</span>
-    <span class="detalle">{{ id.asignatura }} · {{ id.seccion }} · {{ id.universidad }}</span>
+    <span class="integrantes">@for (i of id.integrantes; track i.carne; let ultimo = $last) {{{ i.nombre }} ({{ i.carne }}){{ ultimo ? '' : ' · ' }}}</span>
+    <span class="detalle">{{ id.asignatura }} · Sección {{ id.seccion }} · {{ id.universidad }}</span>
   </div>
 </header>
 

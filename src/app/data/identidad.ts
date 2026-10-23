@@ -1,14 +1,16 @@
 /**
- * Datos de identidad del asistente. COMPLETAR antes de entregar:
- * nombres de ambos integrantes y sección (requisito 7 del enunciado).
+ * Datos de identidad del asistente (requisito 7 del enunciado).
  */
 export const IDENTIDAD = {
   nombre: 'Tangente',
-  lema: 'Asistente de Cálculo y Precálculo',
+  lema: 'Asistente de Cálculo',
   universidad: 'Universidad Mariano Gálvez de Guatemala',
   facultad: 'Facultad de Ingeniería',
-  asignatura: 'Cálculo y Precálculo',
-  seccion: 'Sección [completar]',
-  integrantes: ['[Nombre del integrante 1]', '[Nombre del integrante 2]'],
+  asignatura: 'Cálculo',
+  seccion: 'A',
+  integrantes: [
+    { nombre: 'Selvyn Juan de Marco Gutiérrez Castellanos', carne: '2990-26-4129' },
+    { nombre: 'Yasterin Hesly Azurdia Alvarez', carne: '2990-26-1364' },
+  ],
   entrega: '25/10/2026',
 } as const;

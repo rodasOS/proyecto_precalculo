@@ -12,7 +12,7 @@ describe('App', () => {
     const el = fixture.nativeElement as HTMLElement;
     const cab = el.querySelector('header')!.textContent!;
     expect(cab).toContain(IDENTIDAD.nombre);
-    for (const i of IDENTIDAD.integrantes) expect(cab).toContain(i);
+    for (const i of IDENTIDAD.integrantes) expect(cab).toContain(i.nombre);
     expect(cab).toContain(IDENTIDAD.asignatura);
     expect(cab).toContain(IDENTIDAD.seccion);
   });
